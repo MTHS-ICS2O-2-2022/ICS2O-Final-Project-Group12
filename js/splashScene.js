@@ -17,6 +17,7 @@ class SplashScene extends Phaser.Scene {
         super({ key: "splashScene" })
 
         this.splashSceneBackgroundImage = null
+        this.titleMusic = null
     }
 
     /**
@@ -36,6 +37,9 @@ class SplashScene extends Phaser.Scene {
     preload() {
         console.log("Splash Scene")
         this.load.image("splashSceneBackground", "./assets/splashSceneImage.png")
+
+        //sound
+        this.load.audio("splashMusic", "./assets/theme.wav")
     }
 
     /**
@@ -51,6 +55,9 @@ class SplashScene extends Phaser.Scene {
             )
             this.splashSceneBackgroundImage.x = 1920 / 2
             this.splashSceneBackgroundImage.y = 1080 / 2
+
+        //music
+        this.titleMusic = this.sound.add("splashMusic")
         }
 
     /**

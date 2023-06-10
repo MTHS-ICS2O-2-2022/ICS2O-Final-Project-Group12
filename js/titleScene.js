@@ -17,6 +17,7 @@ class TitleScene extends Phaser.Scene {
         super({ key: "titleScene" })
 
     this.titleSceneBackgroundImage = null
+    this.titleMusic = null
     }
 
 
@@ -37,6 +38,9 @@ class TitleScene extends Phaser.Scene {
     preload() {
         console.log("Title Scene")
         this.load.image("titleSceneBackground", "./assets/cakeStackerStartPage.svg")
+
+        //sound
+        this.load.audio("splashMusic", "./assets/theme.wav")
     }
 
     /**
@@ -50,6 +54,10 @@ class TitleScene extends Phaser.Scene {
         .setScale(1)
         this.titleSceneBackgroundImage.x = 1920 / 2
         this.titleSceneBackgroundImage.y = 1080 / 2
+
+        //music
+        this.titleMusic = this.sound.add("splashMusic")
+        this.titleMusic.play()
 
     }
 
