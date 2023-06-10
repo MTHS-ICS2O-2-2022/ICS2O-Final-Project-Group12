@@ -17,13 +17,8 @@ class TitleScene extends Phaser.Scene {
         super({ key: "titleScene" })
 
     this.titleSceneBackgroundImage = null
-    this.titleSceneText = null
-    this.titleSceneTextStyle = { 
-        font: "200px Times", 
-        fill: "#ff0000", 
-        align: "center" 
     }
-}
+
 
     /**
      * Can be defined on your own scenes
@@ -41,7 +36,7 @@ class TitleScene extends Phaser.Scene {
         */
     preload() {
         console.log("Title Scene")
-        this.load.image("titleSceneBackground", "./assets/cakeStackerStartPage.png")
+        this.load.image("titleSceneBackground", "./assets/cakeStackerStartPage.svg")
     }
 
     /**
@@ -52,14 +47,13 @@ class TitleScene extends Phaser.Scene {
     create(data) {
         this.titleSceneBackgroundImage = this.add
         .sprite(0, 0, "titleSceneBackground")
-        .setScale(2.75)
+        .setScale(1)
         this.titleSceneBackgroundImage.x = 1920 / 2
         this.titleSceneBackgroundImage.y = 1080 / 2
 
-        this.titleSceneText = this.add
-        .text(1920/2, 1080/2 + 350, "CAKE STACKER", this.titleSceneTextStyle)
-        .setOrigin(0.5)
     }
+
+
 
     /**
      * Should be overridden on your own scenes
