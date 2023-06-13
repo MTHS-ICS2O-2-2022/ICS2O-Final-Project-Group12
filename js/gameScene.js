@@ -33,6 +33,8 @@ class GameScene extends Phaser.Scene {
      */
     preload() {
         console.log("Game Scene")
+        this.load.image("gameSceneBackground", "./assets/pinkBackground.svg")
+        this.load.image("cakePlatter", "./assets/cakePlatter.png")
     }
 
     /**
@@ -41,7 +43,9 @@ class GameScene extends Phaser.Scene {
      * @param {object} data- Any data passed via scenePlugin.add () or scenePlugin.start ()
      */
     create(data) {
-        //pass
+        this.background = this.add.sprite(0, 0, "gameSceneBackground")
+        this.background.setOrigin(0, 0)
+        this.cakePlatter = this.add.sprite(1920 / 2, 1080-100, "cakePlatter")
     }
 
     /**

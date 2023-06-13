@@ -38,9 +38,6 @@ class TitleScene extends Phaser.Scene {
     preload() {
         console.log("Title Scene")
         this.load.image("titleSceneBackground", "./assets/cakeStackerStartPage.svg")
-
-        //sound
-        this.load.audio("splashMusic", "./assets/theme.wav")
     }
 
     /**
@@ -56,12 +53,10 @@ class TitleScene extends Phaser.Scene {
         this.titleSceneBackgroundImage.y = 1080 / 2
 
         //music
+        this.load.audio("splashMusic", "./assets/theme.wav")
         this.titleMusic = this.sound.add("splashMusic")
         this.titleMusic.play()
-
-    }
-
-
+}
 
     /**
      * Should be overridden on your own scenes
@@ -70,7 +65,9 @@ class TitleScene extends Phaser.Scene {
      * @param {number} delta- The delta time in ms since the last frame
      */
     update(time, delta) {
-        //pass
+        if (time > 11000) {
+            this.scene.switch("menuScene")
+        }
     }
 }
 
