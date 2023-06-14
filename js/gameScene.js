@@ -9,15 +9,16 @@
 /**
  * This class is the Game Scene
  */
+
 class GameScene extends Phaser.Scene {
     createCake () {
-    const cakeXLocation = Math.floor(Math.random() * 1920) + 1
-    let cakeXVelocity = Math.floor(Math.random() * 50) + 1
-    cakeXVelocity = Math.round(Math.random()) ? 1 : -1
-    const aCake = this.physics.add.sprite(cakeXLocation, -100, "cake1")
-    aCake.body.velocity.y = 200
-    aCake.body.velocity.x = cakeXVelocity 
-    this.cake.add(aCake)
+        const cakeXLocation = Math.floor(Math.random() * 1920) + 1
+        let cakeXVelocity = Math.floor(Math.random() * 50) + 1
+        cakeXVelocity = Math.round(Math.random()) ? 1 : -1
+        const aCake = this.physics.add.sprite(cakeXLocation, -100, "cake1")
+        aCake.body.velocity.y = 200
+        aCake.body.velocity.x = cakeXVelocity 
+        this.cake.add(aCake)
     }
 
     constructor() {
@@ -53,12 +54,26 @@ class GameScene extends Phaser.Scene {
     create(data) {
         this.background = this.add.sprite(0, 0, "gameSceneBackground")
         this.background.setOrigin(0, 0)
-        this.cakePlatter = this.add.sprite(1920 / 2, 1080-100, "cakePlatter")
+        this.cakePlatter = this.physics.add.sprite(1920 / 2, 1080-100, "cakePlatter")
+        this.cakePlatter.body.immovable = true
 
         // Add cake
         this.cake = this.add.group()
         this.createCake()
-        }
+    
+
+    // collision between cake and cake platter
+    this.physics.add.collider(this.cake, this.cakePlatter, function (cakeCollide, cakePlatterCollide) {
+        //this.sound.play("splat.wav")
+        // stop the cake from moving
+        //cakeCollide.body.velocity.y = 0
+        //cakeCollide.body.velocity.x = 0
+        cakeCollide.immovable = true 
+        this.createCake()
+    }.bind(this))
+
+    // this.cake[0]
+}
 
     /**
      * Should be overridden on your own scenes
@@ -71,20 +86,24 @@ class GameScene extends Phaser.Scene {
         const keyrightObj = this.input.keyboard.addKey("RIGHT")
 
         if (keyleftObj.isDown === true) {
-            this.cake1.x -= 15
-        if (this.cake1.x < 0) {
-            this.cake1.x = 0
+            console.log("left")
+            var aSingleCake = this.cake.getLast(true)
+            aSingleCake.x -= 15; 
+            //if (this.cake1.x < 0) {
+            //this.cake1.x = 0
+            //}
         }
-    }
 
         if (keyrightObj.isDown === true) {
-            this.cake1.x += 15
-        if (this.cake1.x > 1920) {
-            this.cake1.x = 1920
+            console.log("right")
+            var aSingleCake = this.cake.getLast(true)
+            aSingleCake.x += 15;
+            //if (this.cake1.x > 1920) {
+            //   this.cake1.x = 1920
+            //}
         }
-    }
 
-} 
+    } 
 }
 
 export default GameScene

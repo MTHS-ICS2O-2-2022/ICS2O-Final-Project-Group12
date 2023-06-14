@@ -51,5 +51,5 @@ const config = {
     game.scene.add("gameScene", gameScene)
 
     //the starting scene
-    game.scene.start("splashScene")
+    game.scene.start("gameScene")
     
