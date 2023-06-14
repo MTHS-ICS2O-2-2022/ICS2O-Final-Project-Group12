@@ -59,6 +59,7 @@ class GameScene extends Phaser.Scene {
 
         // Add cake
         this.cake = this.add.group()
+        this.cake.enableBody = true
         this.createCake()
     
 
@@ -66,9 +67,13 @@ class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.cake, this.cakePlatter, function (cakeCollide, cakePlatterCollide) {
         //this.sound.play("splat.wav")
         // stop the cake from moving
-        //cakeCollide.body.velocity.y = 0
-        //cakeCollide.body.velocity.x = 0
-        cakeCollide.immovable = true 
+        cakeCollide.body.velocity.y = 0
+        cakeCollide.body.velocity.x = 0
+        cakeCollide.body.acceleration.x = 0
+        cakeCollide.body.acceleration.y = 0
+        cakeCollide.body.immovable = true
+        cakeCollide.body.setGravityY(0);
+        cakeCollide.y = cakeCollide.y - 1
         this.createCake()
     }.bind(this))
 
@@ -82,26 +87,41 @@ class GameScene extends Phaser.Scene {
      * @param {number} delta - The delta time in ms since the last frame
      */
     update(time, delta) {
-        const keyleftObj = this.input.keyboard.addKey("LEFT")
-        const keyrightObj = this.input.keyboard.addKey("RIGHT")
+      const keyleftObj = this.input.keyboard.addKey("LEFT")
+      const keyrightObj = this.input.keyboard.addKey("RIGHT")
 
-        if (keyleftObj.isDown === true) {
-            console.log("left")
-            var aSingleCake = this.cake.getLast(true)
-            aSingleCake.x -= 15; 
-            //if (this.cake1.x < 0) {
-            //this.cake1.x = 0
-            //}
-        }
+      if (keyleftObj.isDown === true) {
+          //console.log("left")
+          var aSingleCake = this.cake.getLast(true)
+          aSingleCake.x -= 15; 
+          //if (this.cake1.x < 0) {
+          //this.cake1.x = 0
+          //}
+      }
 
-        if (keyrightObj.isDown === true) {
-            console.log("right")
-            var aSingleCake = this.cake.getLast(true)
-            aSingleCake.x += 15;
-            //if (this.cake1.x > 1920) {
-            //   this.cake1.x = 1920
-            //}
-        }
+      if (keyrightObj.isDown === true) {
+          //console.log("right")
+          var aSingleCake = this.cake.getLast(true)
+          aSingleCake.x += 15;
+          //if (this.cake1.x > 1920) {
+          //   this.cake1.x = 1920
+          //}
+      }
+
+      const numberOfCakes = this.cake.getLength()
+      if (numberOfCakes > 1) {
+          var lastCake = this.cake.getChildren()[numberOfCakes - 1]
+          var secondLastCake = this.cake.getChildren()[numberOfCakes - 2]
+          const testCollide = this.physics.overlap(this.cake.getChildren()[numberOfCakes - 1], this.cake.getChildren()[numberOfCakes - 2])
+          if (testCollide === true) {
+              console.log("collide")
+              this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
+              this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
+              this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
+
+              this.createCake()
+          }
+      }
 
     } 
 }
