@@ -130,7 +130,7 @@
             this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
 
             this.createCake()
-        }
+            }   
         }
     }
 }
