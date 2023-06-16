@@ -73,7 +73,6 @@ class GameScene extends Phaser.Scene {
       this.cakePlatter,
       function (cakeCollide) {
         this.sound.play("splat")
-        console.log("collide cake and cake platter")
         // stop the cake from moving
         cakeCollide.body.velocity.y = 0
         cakeCollide.body.velocity.x = 0
