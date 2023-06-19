@@ -27,8 +27,13 @@ class GameScene extends Phaser.Scene {
     this.scoreText = null
     this.scoreTextStyle = {
       font: "65px Arial",
-      fill: "#000000",
+      fill: "#ff69b4",
       align: "center",
+    }
+    this.gameOverTextStyle = {
+      font: "65px Arial",
+      fill: "#ff69b4", 
+      align: "center"
     }
   }
 
@@ -60,6 +65,7 @@ class GameScene extends Phaser.Scene {
    * @param {object} data- Any data passed via scenePlugin.add () or scenePlugin.start ()
    */
   create(data) {
+    this.score = 0
     this.background = this.add.sprite(0, 0, "gameSceneBackground")
     this.background.setOrigin(0, 0)
     this.scoreText = this.add.text(
@@ -97,11 +103,8 @@ class GameScene extends Phaser.Scene {
         this.score = this.score + 1
         this.scoreText.setText("Score: " + this.score.toString())
         this.createCake()
-      }.bind(this)
-    )
-
-
-    // this.cake[0]
+        console.log("collide with cake platter")
+    }.bind(this))
   }
 
   /**
@@ -141,15 +144,20 @@ class GameScene extends Phaser.Scene {
         this.cake.getChildren()[numberOfCakes - 2]
       )
       if (testCollide === true) {
-        console.log("collide")
         this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
         this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
         this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
 
-        this.score = this.score + 1
+        if (this.score >= 5) {
+          this.gameOverText= this.add.text(1920 / 2, 1080 / 2, "You Win!\nClick to play again.", this.gameOverTextStyle).setOrigin(0.5)
+          this.gameOverText.setInteractive({ useHandCursor: true })
+          this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
+        } else {
+          this.score = this.score + 1
+          this.createCake()
+          console.log("collide with other cake")
+        }
         this.scoreText.setText("Score: " + this.score.toString())
-
-        this.createCake()
       }
     }
   }

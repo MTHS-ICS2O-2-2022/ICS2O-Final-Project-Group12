@@ -28,7 +28,7 @@ const config = {
     physics: {
         default: "arcade",
         arcade: {
-            debug : true,
+            debug : false,
         },
     },
     //set background color
@@ -51,5 +51,5 @@ const config = {
     game.scene.add("gameScene", gameScene)
 
     //the starting scene
-    game.scene.start("gameScene")
+    game.scene.start("splashScene")
     
