@@ -23,6 +23,13 @@ class GameScene extends Phaser.Scene {
 
   constructor() {
     super({ key: "gameScene" })
+    this.score = 0
+    this.scoreText = null
+    this.scoreTextStyle = {
+      font: "65px Arial",
+      fill: "#000000",
+      align: "center",
+    }
   }
 
   /**
@@ -55,6 +62,12 @@ class GameScene extends Phaser.Scene {
   create(data) {
     this.background = this.add.sprite(0, 0, "gameSceneBackground")
     this.background.setOrigin(0, 0)
+    this.scoreText = this.add.text(
+      10,
+      10,
+      "Score: " + this.score.toString(),
+      this.scoreTextStyle
+    )
     this.cakePlatter = this.physics.add.sprite(
       1920 / 2,
       1080 - 100,
@@ -81,9 +94,12 @@ class GameScene extends Phaser.Scene {
         cakeCollide.body.immovable = true
         cakeCollide.body.setGravityY(0)
         cakeCollide.y = cakeCollide.y - 1
+        this.score = this.score + 1
+        this.scoreText.setText("Score: " + this.score.toString())
         this.createCake()
       }.bind(this)
     )
+
 
     // this.cake[0]
   }
@@ -129,6 +145,9 @@ class GameScene extends Phaser.Scene {
         this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
         this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
         this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
+
+        this.score = this.score + 1
+        this.scoreText.setText("Score: " + this.score.toString())
 
         this.createCake()
       }
