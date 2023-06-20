@@ -32,8 +32,8 @@ class GameScene extends Phaser.Scene {
     }
     this.gameOverTextStyle = {
       font: "65px Arial",
-      fill: "#ff69b4", 
-      align: "center"
+      fill: "#ff69b4",
+      align: "center",
     }
   }
 
@@ -104,7 +104,8 @@ class GameScene extends Phaser.Scene {
         this.scoreText.setText("Score: " + this.score.toString())
         this.createCake()
         console.log("collide with cake platter")
-    }.bind(this))
+      }.bind(this)
+    )
   }
 
   /**
@@ -149,9 +150,18 @@ class GameScene extends Phaser.Scene {
         this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
 
         if (this.score >= 5) {
-          this.gameOverText= this.add.text(1920 / 2, 1080 / 2, "You Win!\nClick to play again.", this.gameOverTextStyle).setOrigin(0.5)
+          this.gameOverText = this.add
+            .text(
+              1920 / 2,
+              1080 / 2,
+              "You Win!\nClick to play again.",
+              this.gameOverTextStyle
+            )
+            .setOrigin(0.5)
           this.gameOverText.setInteractive({ useHandCursor: true })
-          this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
+          this.gameOverText.on("pointerdown", () =>
+            this.scene.start("gameScene")
+          )
         } else {
           this.score = this.score + 1
           this.createCake()
