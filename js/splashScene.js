@@ -39,7 +39,7 @@ class SplashScene extends Phaser.Scene {
     this.load.image("splashSceneBackground", "./assets/splashSceneImage.png")
 
     //sound
-    this.load.audio("splashMusic", "./assets/theme.wav")
+    this.load.audio("splashMusic", "./assets/them.wav")
   }
 
   /**
