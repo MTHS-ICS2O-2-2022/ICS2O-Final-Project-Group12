@@ -108,46 +108,48 @@ class GameScene extends Phaser.Scene {
     )
   }
 
-  /**
-   * Should be overridden on your own scenes
-   * This method is called once per game step while the scene is running
-   * @param {number} time - The current times
-   * @param {number} delta - The delta time in ms since the last frame
-   */
-  update(time, delta) {
-    const keyleftObj = this.input.keyboard.addKey("LEFT")
-    const keyrightObj = this.input.keyboard.addKey("RIGHT")
+    /**
+     * Should be overridden on your own scenes
+     * This method is called once per game step while the scene is running
+     * @param {number} time - The current times
+     * @param {number} delta - The delta time in ms since the last frame
+     */
+    update(time, delta) {
+      const keyleftObj = this.input.keyboard.addKey("LEFT")
+      const keyrightObj = this.input.keyboard.addKey("RIGHT")
 
-    if (keyleftObj.isDown === true) {
-      //console.log("left")
-      var aSingleCake = this.cake.getLast(true)
-      aSingleCake.x -= 15
-      //if (this.cake1.x < 0) {
-      //this.cake1.x = 0
-      //}
-    }
+      if (keyleftObj.isDown === true) {
+          //console.log("left")
+          var aSingleCake = this.cake.getLast(true)
+          aSingleCake.x -= 15; 
+          //if (this.cake1.x < 0) {
+          //this.cake1.x = 0
+          //}
+      }
 
-    if (keyrightObj.isDown === true) {
-      //console.log("right")
-      var aSingleCake = this.cake.getLast(true)
-      aSingleCake.x += 15
-      //if (this.cake1.x > 1920) {
-      //   this.cake1.x = 1920
-      //}
-    }
+      if (keyrightObj.isDown === true) {
+          //console.log("right")
+          var aSingleCake = this.cake.getLast(true)
+          aSingleCake.x += 15;
+          //if (this.cake1.x > 1920) {
+          //   this.cake1.x = 1920
+          //}
+      }
 
-    const numberOfCakes = this.cake.getLength()
-    if (numberOfCakes > 1) {
-      var lastCake = this.cake.getChildren()[numberOfCakes - 1]
-      var secondLastCake = this.cake.getChildren()[numberOfCakes - 2]
-      const testCollide = this.physics.overlap(
-        this.cake.getChildren()[numberOfCakes - 1],
-        this.cake.getChildren()[numberOfCakes - 2]
-      )
-      if (testCollide === true) {
-        this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
-        this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
-        this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
+      const numberOfCakes = this.cake.getLength()
+      if (numberOfCakes > 1) {
+          var lastCake = this.cake.getChildren()[numberOfCakes - 1]
+          var secondLastCake = this.cake.getChildren()[numberOfCakes - 2]
+          const testCollide = this.physics.overlap(this.cake.getChildren()[numberOfCakes - 1], this.cake.getChildren()[numberOfCakes - 2])
+          if (testCollide === true) {
+              console.log("collide")
+              this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
+              this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
+              this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
+
+              this.createCake()
+          }
+      }
 
         if (this.score >= 5) {
           this.gameOverText = this.add
