@@ -172,7 +172,5 @@ class GameScene extends Phaser.Scene {
         this.scoreText.setText("Score: " + this.score.toString())
       }
     }
-  }
-}
 
 export default GameScene
