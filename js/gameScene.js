@@ -1,15 +1,12 @@
 /* global Phaser */
-
 // Copyright (c) 2023 Mariam Kasim All rights reserved
 //
 // Created by: Mariam Kasim
 // Created on: June 2023
 //This is the Game Scene
-
 /**
  * This class is the Game Scene
  */
-
 class GameScene extends Phaser.Scene {
   createCake() {
     const cakeXLocation = Math.floor(Math.random() * 1920) + 1
@@ -20,7 +17,6 @@ class GameScene extends Phaser.Scene {
     aCake.body.velocity.x = cakeXVelocity
     this.cake.add(aCake)
   }
-
   constructor() {
     super({ key: "gameScene" })
     this.score = 0
@@ -31,12 +27,11 @@ class GameScene extends Phaser.Scene {
       align: "center",
     }
     this.gameOverTextStyle = {
-      font: "65px Arial",
+      font: "65px Arial", 
       fill: "#ff69b4",
       align: "center",
     }
   }
-
   /**
    * Can be defined on your own scenes
    * This method is called by the scene manager when the scene starts
@@ -46,7 +41,6 @@ class GameScene extends Phaser.Scene {
   init(data) {
     this.cameras.main.setBackgroundColor("#ffffff")
   }
-
   /**
    * Can be defined on your own scenes
    * Use it to load assets
@@ -58,7 +52,6 @@ class GameScene extends Phaser.Scene {
     this.load.image("cake1", "./assets/cake1.svg")
     this.load.audio("splat", "./assets/splat.wav")
   }
-
   /**
    * Can be defined on your own scenes
    * Use it to create your game objects
@@ -80,12 +73,10 @@ class GameScene extends Phaser.Scene {
       "cakePlatter"
     )
     this.cakePlatter.body.immovable = true
-
     // Add cake
     this.cake = this.add.group()
     this.cake.enableBody = true
     this.createCake()
-
     // collision between cake and cake platter
     this.physics.add.collider(
       this.cake,
@@ -105,74 +96,62 @@ class GameScene extends Phaser.Scene {
         this.createCake()
         console.log("collide with cake platter")
       }.bind(this)
-    )
-  }
+      )
+    }
 
     /**
-     * Should be overridden on your own scenes
-     * This method is called once per game step while the scene is running
-     * @param {number} time - The current times
-     * @param {number} delta - The delta time in ms since the last frame
-     */
-    update(time, delta) {
-      const keyleftObj = this.input.keyboard.addKey("LEFT")
-      const keyrightObj = this.input.keyboard.addKey("RIGHT")
-
-      if (keyleftObj.isDown === true) {
-          //console.log("left")
-          var aSingleCake = this.cake.getLast(true)
-          aSingleCake.x -= 15; 
-          //if (this.cake1.x < 0) {
-          //this.cake1.x = 0
-          //}
-      }
-
-      if (keyrightObj.isDown === true) {
-          //console.log("right")
-          var aSingleCake = this.cake.getLast(true)
-          aSingleCake.x += 15;
-          //if (this.cake1.x > 1920) {
-          //   this.cake1.x = 1920
-          //}
-      }
-
-      const numberOfCakes = this.cake.getLength()
-      if (numberOfCakes > 1) {
-          var lastCake = this.cake.getChildren()[numberOfCakes - 1]
-          var secondLastCake = this.cake.getChildren()[numberOfCakes - 2]
-          const testCollide = this.physics.overlap(this.cake.getChildren()[numberOfCakes - 1], this.cake.getChildren()[numberOfCakes - 2])
-          if (testCollide === true) {
-              console.log("collide")
-              this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
-              this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
-              this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
-
-              this.createCake()
-          }
-      }
+   * Should be overridden on your own scenes
+   * This method is called once per game step while the scene is running
+   * @param {number} time - The current times
+   * @param {number} delta - The delta time in ms since the last frame
+   */
+  update(time, delta) {
+    const keyleftObj = this.input.keyboard.addKey("LEFT")
+    const keyrightObj = this.input.keyboard.addKey("RIGHT")
+    if (keyleftObj.isDown === true) {
+      //console.log("left")
+      var aSingleCake = this.cake.getLast(true)
+      aSingleCake.x -= 15
+    }
+    if (keyrightObj.isDown === true) {
+      //console.log("right")
+      var aSingleCake = this.cake.getLast(true)
+      aSingleCake.x += 15
+    }
+    const numberOfCakes = this.cake.getLength()
+    if (numberOfCakes > 1) {
+      var lastCake = this.cake.getChildren()[numberOfCakes - 1]
+      var secondLastCake = this.cake.getChildren()[numberOfCakes - 2]
+      const testCollide = this.physics.overlap(
+        this.cake.getChildren()[numberOfCakes - 1],
+        this.cake.getChildren()[numberOfCakes - 2]
+      )
+      if (testCollide === true) {
+        this.cake.getChildren()[numberOfCakes - 1].body.immovable = true
+        this.cake.getChildren()[numberOfCakes - 1].body.velocity.y = 0
+        this.cake.getChildren()[numberOfCakes - 1].body.velocity.x = 0
 
         if (this.score >= 5) {
           this.gameOverText = this.add
-            .text(
-              1920 / 2,
-              1080 / 2,
-              "You Win!\nClick to play again.",
-              this.gameOverTextStyle
-            )
-            .setOrigin(0.5)
+          .text(
+            1920 / 2,
+            1080 / 2,
+            "You Win!\nClick to play again.",
+            this.gameOverTextStyle
+          )
+          .setOrigin(0.5)
           this.gameOverText.setInteractive({ useHandCursor: true })
           this.gameOverText.on("pointerdown", () =>
-            this.scene.start("gameScene")
-          )
-        } else {
-          this.score = this.score + 1
-          this.createCake()
-          console.log("collide with other cake")
-        }
-        this.scoreText.setText("Score: " + this.score.toString())
+          this.scene.start("gameScene")
+        )
+      } else {
+        this.score = this.score + 1
+        this.createCake()
+        console.log("collide with other cake")
       }
+      this.scoreText.setText("Score: " + this.score.toString())
     }
   }
 }
-
+}
 export default GameScene
